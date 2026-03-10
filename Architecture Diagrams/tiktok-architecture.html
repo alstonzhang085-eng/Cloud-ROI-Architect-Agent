@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Feed System Architecture</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .diagram-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+        }
+
+        .architecture-layers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .layer-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .layer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .layer-card.api { border-left-color: #667eea; }
+        .layer-card.services { border-left-color: #764ba2; }
+        .layer-card.data { border-left-color: #f093fb; }
+        .layer-card.messaging { border-left-color: #f5576c; }
+
+        .layer-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .layer-title .emoji {
+            font-size: 1.2em;
+        }
+
+        .layer-content {
+            color: #555;
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        .layer-content ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .layer-content li {
+            margin: 8px 0;
+            color: #666;
+        }
+
+        .metrics {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .metrics h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .metric-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .data-flow {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f0f4ff;
+            border-radius: 15px;
+        }
+
+        .data-flow h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flow-step {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .flow-step::before {
+            content: attr(data-step);
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 35px;
+            height: 35px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .flow-step h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .flow-step p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 TikTok Feed System Architecture</h1>
+        <p class="subtitle">High-Performance Video Recommendation Pipeline with 40M Concurrent Users</p>
+
+        <div class="diagram-container">
+            <div class="mermaid">
+                graph TD
+                    Client["📱 Client App"]
+                    API_Gateway["🌐 API Gateway"]
+                    Feed_Service["📋 Feed Service"]
+                    Candidate_Service["🎯 Candidate Service"]
+                    Ranking_Service["⭐ Ranking Service"]
+                    Feature_Store["🗃️ Feature Store"]
+                    Video_Index["📚 Video Index"]
+                    Metadata_DB["💾 Metadata DB"]
+                    Redis_Cache["⚡ Redis Cache"]
+                    User_Events["📊 User Events"]
+                    Kafka["🔄 Kafka Queue"]
+                    Stream_Processing["⚙️ Stream Processing"]
+                    Object_Storage["📦 Object Storage"]
+
+                    Client -->|HTTP Request| API_Gateway
+                    API_Gateway -->|Forward Request| Feed_Service
+
+                    Feed_Service -->|Get Candidates| Candidate_Service
+                    Feed_Service -->|Rank Videos| Ranking_Service
+                    Feed_Service -->|Cache Result| Redis_Cache
+
+                    Candidate_Service -->|Fetch Features| Feature_Store
+                    Candidate_Service -->|Search Videos| Video_Index
+
+                    Ranking_Service -->|ML Features| Feature_Store
+                    Ranking_Service -->|Video Metadata| Metadata_DB
+
+                    User_Events -->|Engagement Data| Kafka
+                    Kafka -->|Real-time Events| Stream_Processing
+                    Stream_Processing -->|Update Features| Feature_Store
+
+                    Metadata_DB -->|Video Content| Object_Storage
+
+                    style Client fill:#e1f5ff,stroke:#2196f3,stroke-width:2px
+                    style API_Gateway fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+                    style Feed_Service fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+                    style Candidate_Service fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+                    style Ranking_Service fill:#ffebee,stroke:#f44336,stroke-width:2px
+                    style Feature_Store fill:#fce4ec,stroke:#e91e63,stroke-width:2px
+                    style Video_Index fill:#e0f2f1,stroke:#009688,stroke-width:2px
+                    style Metadata_DB fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+                    style Redis_Cache fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px
+                    style User_Events fill:#fce4ec,stroke:#e91e63,stroke-width:2px
+                    style Kafka fill:#fff3e0,stroke:#ff5722,stroke-width:2px
+                    style Stream_Processing fill:#f1f8e9,stroke:#8bc34a,stroke-width:2px
+                    style Object_Storage fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
+            </div>
+        </div>
+
+        <div class="architecture-layers">
+            <div class="layer-card api">
+                <div class="layer-title"><span class="emoji">🚪</span> API Layer</div>
+                <div class="layer-content">
+                    <ul>
+                        <li><strong>Client App</strong> - Mobile application for users to browse videos</li>
+                        <li><strong>API Gateway</strong> - Entry point handling authentication, rate limiting, and routing</li>
+                        <li><strong>Redis Cache</strong> - High-speed caching layer for frequently accessed feeds</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer-card services">
+                <div class="layer-title"><span class="emoji">⚙️</span> Service Layer</div>
+                <div class="layer-content">
+                    <ul>
+                        <li><strong>Feed Service</strong> - Orchestrates feed generation and serves requests</li>
+                        <li><strong>Candidate Service</strong> - Generates 2000 candidate videos using recall strategies</li>
+                        <li><strong>Ranking Service</strong> - Applies ML models to rank and select top 10 videos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer-card data">
+                <div class="layer-title"><span class="emoji">🗄️</span> Data Layer</div>
+                <div class="layer-content">
+                    <ul>
+                        <li><strong>Feature Store</strong> - Centralized repository for real-time user and video features</li>
+                        <li><strong>Metadata DB</strong> - Stores video metadata, creator info, and content attributes</li>
+                        <li><strong>Video Index</strong> - Search index for fast video lookup and filtering</li>
+                        <li><strong>Object Storage</strong> - Stores actual video files and media content</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer-card messaging">
+                <div class="layer-title"><span class="emoji">📡</span> Messaging Layer</div>
+                <div class="layer-content">
+                    <ul>
+                        <li><strong>Kafka Queue</strong> - Streaming platform for real-time event processing</li>
+                        <li><strong>Stream Processing</strong> - Real-time analytics and feature updates from user interactions</li>
+                        <li><strong>User Events</strong> - Engagement signals: likes, comments, shares, watch time</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics">
+            <h3>📊 System Performance Metrics</h3>
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <div class="metric-value">40M</div>
+                    <div class="metric-label">Peak Concurrent Users</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">700K</div>
+                    <div class="metric-label">Peak Feed QPS</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">&lt;150ms</div>
+                    <div class="metric-label">Feed Load Latency</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">99.99%</div>
+                    <div class="metric-label">System Availability</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-flow">
+            <h3>🔄 Data Flow Architecture</h3>
+            <div class="flow-steps">
+                <div class="flow-step" data-step="1">
+                    <h4>User Request</h4>
+                    <p>Client sends feed request → API Gateway authenticates → Feed Service orchestrates pipeline</p>
+                </div>
+                <div class="flow-step" data-step="2">
+                    <h4>Candidate Generation</h4>
+                    <p>Candidate Service retrieves 2000 videos using recall strategies from Video Index</p>
+                </div>
+                <div class="flow-step" data-step="3">
+                    <h4>Feature Fetching</h4>
+                    <p>Real-time features fetched from Feature Store for ML ranking models</p>
+                </div>
+                <div class="flow-step" data-step="4">
+                    <h4>ML Ranking</h4>
+                    <p>Ranking Service applies deep learning models to select top 10 videos</p>
+                </div>
+                <div class="flow-step" data-step="5">
+                    <h4>Real-time Updates</h4>
+                    <p>User events stream through Kafka → Stream Processing updates Feature Store in seconds</p>
+                </div>
+                <div class="flow-step" data-step="6">
+                    <h4>Cached Response</h4>
+                    <p>Results cached in Redis for 30 seconds to reduce latency and load</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

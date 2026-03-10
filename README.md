@@ -350,6 +350,3 @@ Live cost API integration
 Contributions welcome.
 
 We are building the first open architecture reasoning engine for distributed systems.
-
-
-很多人点进 repo 第一眼就会 star ⭐。

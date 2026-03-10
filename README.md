@@ -1,82 +1,355 @@
-# 🚀 Cloud-ROI-Architect-Agent (V1.0 Blueprint Edition)
 
-**From "Listing Components" to "Architecture Compiling & Risk Auditing."**
 
-> **"Architecture is not just a drawing; it's a verifiable mathematical proof."**
-> This Agent is a **Deterministic Architecture Reasoning Engine**. It doesn't just "generate" designs; it **validates** them against physical laws, **audits** them for anti-patterns using graph theory, and **stresses** them via automated failure simulations.
+🚀 Cloud-ROI-Architect-Agent
 
----
+AI-Powered Distributed System Architecture Verification Engine
 
-## 🏗️ The Core Evolution: Architecture as a Compiler
+Architecture is not just a diagram — it’s a verifiable system model.
 
-We've shifted the paradigm from simple prompting to a strict **8-Stage Reasoning Pipeline**.
+Cloud-ROI-Architect-Agent is an AI architecture reasoning engine that generates, validates, and stress-tests distributed system designs.
 
-### 1. Workload & Capacity Reasoning
+Unlike traditional AI tools that only generate architecture diagrams, this engine treats system architecture as a compilable graph model and verifies it against:
 
-Automated derivation of QPS, IOPS, and Shard counts. No more "guessing" instance sizes; every node is backed by quantitative data.
+ •	workload physics
+ •	cost constraints
+ •	distributed system laws
+ •	failure scenarios
 
-### 2. Architecture Graph Engine (The Source of Truth)
+⸻
 
-Every design is modeled as a **Directed Graph**. This allows the engine to run:
+🧠 Core Idea: Architecture as Code
 
-* **Cycle Detection**: Prevents infinite replication loops.
-* **Split-Brain Audit**: Identifies multiple authoritative writers.
-* **Commit Boundary Analysis**: Ensures data consistency across regions.
+Modern distributed systems are complex.
 
-### 3. Failure Path Simulator
+Most architecture diagrams are static drawings.
 
-The agent doesn't just hope for the best. It simulates:
+Architecture Compiler turns them into executable reasoning models.
 
-* **Region Outages**: "What happens if Tokyo goes dark?"
-* **Traffic Spikes**: "Can the 16-shard Aurora handle a 20x burst?"
-* **Cascading Failures**: Mapping the blast radius from a single Redis crash to global service degradation.
+Architecture Diagram
+      ↓
+Graph Model
+      ↓
+Validation Engines
+      ↓
+Failure Simulation
+      ↓
+Architecture Report
 
----
+This transforms system design from:
 
-## 🛠️ Key New Features
+Subjective diagrams
 
-### 📉 Cost Reconciliation Gate (Anti-Hallucination)
+into
 
-We solved the "Data Conflict" bug. The agent now runs a mandatory reconciliation between **Infrastructure Cost** (Real AWS/Azure pricing) and **Unit Economics** (Business budget). If the gap is >30%, the architecture is automatically flagged as **Invalid**.
+Verifiable architecture models
 
-### 🐍 Diagrams-as-Code (No More Rendering Crashes)
 
-When system complexity grows, the agent bypasses fragile Mermaid scripts and outputs **Professional Python Diagrams Code**.
+⸻
 
-* **Native Icons**: AWS/Azure/GCP official icon sets.
-* **Hotspot Highlighting**: Automated orange-shading for saturated nodes.
-* **Failure Visualization**: Red-dashed lines for simulated broken paths.
+⚡ What This Engine Does
 
----
+The agent performs four critical architecture audits automatically.
 
-## 📁 Updated Repository Structure
+1️⃣ Workload Modeling
 
-```text
-├── agents/
-│   └── SKILL.md             # The Core Engine: 8-Stage Pipeline & 5 Validation Engines
-├── engines/                 # Analysis Modules
-│   ├── graph_engine.py      # Architecture-as-Graph modeling logic
-│   ├── anti_pattern.py      # AP-DIST/AP-FIN/AP-PHY detector rules
-│   └── failure_sim.py       # Blast radius and RTO calculator
-├── scripts/
-│   ├── update_prices.py     # Nightly cloud price crawler
-│   └── viz_engine.py        # Python Diagrams generation wrapper
-├── data/
-│   └── latest_prices.json   # Real-time pricing DB
-└── docs/case-studies/       # Multi-region, High-Frequency, and SaaS samples
+Derives system capacity from business inputs.
 
-```
+Example:
 
----
+DAU: 50M
+Avg requests per user: 12/day
+Peak multiplier: 4x
 
-## 🧪 Quick Start: Auditing a High-Burst System
+Generated model:
 
-To trigger the **V1.0 Reasoning Engine**, provide the following context:
+Peak QPS: 27,777
+Required service nodes: 48
+Required database shards: 12
 
-1. **System Mode**: (Financial-Critical / SaaS-Distributed / etc.)
-2. **Business Pulse**: (DAU, Peak QPS, Burst Ratio)
-3. **Physical Constraints**: (SLA, Regions, RTT limits)
 
-The Agent will then execute the **8-Stage Audit** and provide a verifiable, risk-simulated architecture report.
+⸻
 
----
+2️⃣ Architecture Graph Engine
+
+Every architecture becomes a Directed Graph.
+
+Example:
+
+Client → API Gateway → Service → Cache → Database
+
+The engine performs automated graph analysis:
+
+•	Cycle Detection
+•	Split Brain Detection
+•	Write Authority Validation
+•	Commit Boundary Analysis
+
+This prevents classic distributed system failures.
+
+⸻
+
+3️⃣ Failure Path Simulator
+
+The system simulates real production disasters.
+
+Example scenarios:
+
+Region outage
+Database leader crash
+Cache cluster failure
+Traffic spike
+
+The engine calculates:
+
+RTO
+Blast radius
+Failover behavior
+
+
+⸻
+
+4️⃣ Cost Reconciliation Gate
+
+One of the most common AI hallucinations is unrealistic infrastructure cost.
+
+This engine cross-checks architecture cost against real cloud pricing.
+
+If cost mismatch exceeds 30%, the architecture is flagged.
+
+Example:
+
+Estimated infra cost: $3.4M/year
+Business budget: $2.5M/year
+
+Result:
+⚠ Architecture invalid
+
+
+⸻
+
+🏗️ Architecture Reasoning Pipeline
+
+The system follows a deterministic 8-stage reasoning pipeline.
+
+graph LR
+
+Input --> Workload_Model
+
+Workload_Model --> Graph_Model
+
+Graph_Model --> Capacity_Planner
+
+Capacity_Planner --> AntiPattern_Detector
+
+AntiPattern_Detector --> Failure_Simulator
+
+Failure_Simulator --> Cost_Model
+
+Cost_Model --> Cost_Reconciliation
+
+Cost_Reconciliation --> Architecture_Report
+
+
+⸻
+
+📊 Example System Audit
+
+Input
+
+System Mode: SaaS-Distributed
+DAU: 40M
+Peak QPS: 80k
+Regions: US + EU
+SLA: 99.99%
+
+
+⸻
+
+Generated Architecture
+
+graph TD
+
+Client --> CDN
+CDN --> API_Gateway
+
+API_Gateway --> Service_Cluster
+
+Service_Cluster --> Redis_Cache
+Service_Cluster --> Aurora_DB
+
+Aurora_DB --> Cross_Region_Replica
+
+
+⸻
+
+Capacity Result
+
+Service Nodes: 64
+Cache Cluster: 12 shards
+Aurora Cluster: r6g.4xlarge × 6
+
+
+⸻
+
+Failure Simulation
+
+Scenario: EU region outage
+
+Traffic rerouted to US
+Recovery time: 21 seconds
+User impact: <3% request failure
+
+
+⸻
+
+Cost Model
+
+Estimated infra cost:
+$2.8M / year
+
+
+⸻
+
+📉 Anti-Pattern Detection
+
+The engine detects common architecture mistakes.
+
+Examples:
+
+AP-DIST-001
+
+Multi-region write without consensus protocol
+
+Risk:
+
+Data inconsistency
+Split brain
+
+
+⸻
+
+AP-DIST-004
+
+Cache cluster without eviction policy
+
+Risk:
+
+Cache memory overflow
+Global service degradation
+
+
+⸻
+
+Diagrams-as-Code
+
+Instead of fragile diagram scripts, the engine outputs Python architecture diagrams.
+
+Benefits:
+
+•	AWS / Azure/ Google Cloud  native icons (on the way)
+•	hotspot highlighting
+•	failure path visualization
+
+Example:
+
+from diagrams import Diagram
+from diagrams.aws.compute import EC2
+from diagrams.aws.database import Aurora
+
+with Diagram("System Architecture"):
+    service = EC2("Service Cluster")
+    db = Aurora("Aurora Global")
+
+    service >> db
+
+
+⸻
+
+📁 Repository Structure
+
+agents/
+   SKILL.md
+   Core reasoning pipeline
+
+engines/
+   graph_engine.py
+   anti_pattern.py
+   failure_sim.py
+
+scripts/
+   update_prices.py
+   viz_engine.py
+
+data/
+   latest_prices.json
+
+docs/
+   case-studies/
+
+
+⸻
+
+⚡ Quick Start
+
+Provide system context:
+
+System Mode
+Business workload
+Physical constraints
+
+Example:
+
+System Mode: Financial-Critical
+DAU: 12M
+Peak QPS: 45k
+Regions: Tokyo + Singapore
+SLA: 99.99%
+
+The engine will generate:
+
+Architecture graph
+Capacity plan
+Failure simulation
+Cost model
+
+
+⸻
+
+🎯 Vision
+
+Modern infrastructure is built with tools like:
+
+•	Terraform
+•	Pulumi
+
+But architecture design itself remains manual.
+
+Architecture Compiler aims to create:
+
+Architecture as Code
+Architecture as Graph
+Architecture as Simulation
+
+Turning system design into a verifiable engineering discipline.
+
+⸻
+
+⭐ Future Roadmap
+
+Planned features:
+
+Multi-cloud architecture validation
+LLM-guided architecture suggestions
+Live cost API integration
+
+
+⸻
+
+🧩 Contributing
+
+Contributions welcome.
+
+We are building the first open architecture reasoning engine for distributed systems.
+
+
+很多人点进 repo 第一眼就会 star ⭐。
